@@ -22,7 +22,7 @@ services:
       restart_policy:
         condition: on-failure
   roach:
-    image: cockroachdb/cockroach:latest-v20.1
+    image: cockroachdb/cockroach:latest-v24.3
     container_name: roach
     hostname: db
     networks:
@@ -31,7 +31,10 @@ services:
       - 26257:26257
       - 8080:8080
     volumes:
-      - roach:/cockroach/cockroach-data
+      # the following line would create new volume
+      # - roach:/cockroach/cockroach-data
+      # get the path from docker inspect -f '{{ .Mounts }}' roach
+      - /var/lib/docker/volumes/roach/_data:/cockroach/cockroach-data
     command: start-single-node --insecure
 
 volumes:
