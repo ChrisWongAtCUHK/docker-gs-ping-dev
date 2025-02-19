@@ -34,11 +34,14 @@ services:
       # the following line would create new volume
       # - roach:/cockroach/cockroach-data
       # get the path from docker inspect -f '{{ .Mounts }}' roach
-      - /var/lib/docker/volumes/roach/_data:/cockroach/cockroach-data
+      - roach:/cockroach/cockroach-data
     command: start-single-node --insecure
 
 volumes:
   roach:
+    external: true
+    name: roach
+      
 
 networks:
   mynet:
